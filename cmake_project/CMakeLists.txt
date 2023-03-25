@@ -71,7 +71,9 @@ add_executable(${elf_file} ${sources})
 
 # set additional for compiler and linker: optimization and generate map file
 set(additional_compiler_flags ${opt_level})
-set(additional_linker_flags -Wl,-Map=${map_file},--cref,--no-warn-mismatch)
+
+
+set(additional_linker_flags -Wl,-Map=${application_name}.map,--cref,--no-warn-mismatch)
 target_compile_options(${elf_file} PRIVATE ${additional_compiler_flags})
 target_link_libraries(${elf_file} PRIVATE ${additional_linker_flags})
 
