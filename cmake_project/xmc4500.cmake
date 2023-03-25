@@ -1,3 +1,5 @@
+include(xmc4500_opt.cmake)
+
 # the name of the target operating system
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_VERSION 1)
@@ -17,12 +19,14 @@ set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 # compiler: language specific flags
 set(CMAKE_C_STANDARD 99)
 
-set(CMAKE_C_FLAGS " -g -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra")
-set(CMAKE_CXX_FLAGS "-g -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra")
-set(CMAKE_C_FLAGS_RELEASE "-g -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra")
-set(CMAKE_CXX_FLAGS_RELEASE "-g -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra")
-set(CMAKE_C_FLAGS_DEBUG "-g -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra")
-set(CMAKE_CXX_FLAGS_DEBUG "-g -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra")
+set(CMAKE_C_FLAGS "${XMC4500_CCOPT}")
+set(CMAKE_C_FLAGS_RELEASE "${XMC4500_CCOPT}")
+set(CMAKE_C_FLAGS_DEBUG "${XMC4500_CCOPT}")
+set(CMAKE_CXX_FLAGS "${XMC4500_CCXOPT}")
+set(CMAKE_CXX_FLAGS_RELEASE "${XMC4500_CCXOPT}")
+set(CMAKE_CXX_FLAGS_DEBUG "${XMC4500_CCXOPT}")
+
+
 
 
 set(CMAKE_ASM_FLAGS "${CORE_FLAGS} -g -ggdb3 -D__USES_CXX" CACHE INTERNAL "asm compiler flags")
