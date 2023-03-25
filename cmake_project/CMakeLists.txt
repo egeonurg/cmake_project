@@ -1,17 +1,5 @@
 cmake_minimum_required (VERSION 3.0)
-
 include(xmc4500.cmake)
-
-# set the build type
-if(NOT CMAKE_BUILD_TYPE) 
-    set(CMAKE_BUILD_TYPE Release)
-endif(NOT CMAKE_BUILD_TYPE)
-
-if(CMAKE_BUILD_TYPE MATCHES Debug)
-  message("Debug build.")
-elseif(CMAKE_BUILD_TYPE MATCHES Release)
-  message("Release build.")
-endif()
 
 # Project specific settings
 set(application_name "xmc4500")
@@ -20,7 +8,7 @@ project (${application_name} C CXX ASM)
 
 # STM32-specific settings
 set(XMC4500_F100x1024 1)
-
+set(MCU_SERIES "XMC4500")
 # Used linker file (just for testing)
 get_filename_component(LINKER_SCRIPT xmc4500.ld ABSOLUTE)
 
@@ -77,10 +65,6 @@ set(opt_level -O0)
 
 # set some project constants
 set(elf_file ${application_name}.elf)
-set(bin_file ${application_name}.bin)
-set(hex_file ${application_name}.hex)
-set(map_file ${application_name}.map)
-set(lss_file ${application_name}.lss)
 
 # add sources to elf file
 add_executable(${elf_file} ${sources})
@@ -96,14 +80,3 @@ target_link_libraries(${elf_file} PUBLIC "-g -Wl,--gc-sections")
 
 # link with linker file
 target_link_libraries(${elf_file} PUBLIC -T${LINKER_SCRIPT})
-
-# show size of resulting firmware image
-add_custom_target(${elf_file}-size DEPENDS ${elf_file} COMMAND ${ARM_SIZE_EXECUTABLE} -B ${elf_file})
-
-# generate extended listing
-add_custom_target(${lss_file} DEPENDS ${elf_file} COMMAND ${ARM_OBJDUMP_EXECUTABLE} -S ${elf_file} > ${lss_file})
-
-# create binary and hex files
-add_custom_target(${hex_file} DEPENDS ${elf_file} COMMAND ${ARM_OBJCOPY_EXECUTABLE} -Oihex ${elf_file} ${hex_file})
-add_custom_target(${bin_file} DEPENDS ${elf_file} COMMAND ${ARM_OBJCOPY_EXECUTABLE} -Obinary ${elf_file} ${bin_file})
-add_custom_target(${application_name} ALL DEPENDS ${elf_file}-size ${bin_file} ${hex_file} ${lss_file})

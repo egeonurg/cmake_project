@@ -1,7 +1,9 @@
 # the name of the target operating system
-set(CMAKE_SYSTEM_NAME     Generic)
-set(CMAKE_SYSTEM_VERSION        1)
-set(CMAKE_SYSTEM_PROCESSOR    ARM)
+set(CMAKE_SYSTEM_NAME Generic)
+set(CMAKE_SYSTEM_VERSION 1)
+set(CMAKE_SYSTEM_PROCESSOR ARM)
+set(PREPROCESSORS_FLAGS "-DXMC4500_F100x1024 -D__FPU_PRESENT -D__MPU_PRESENT")
+add_compile_definitions(${PREPROCESSORS_FLAGS})
 
 # which compilers to use for C and C++
 set(CMAKE_C_COMPILER   arm-none-eabi-gcc)
@@ -12,17 +14,16 @@ set(CMAKE_OBJDUMP      arm-none-eabi-objdump)
 
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
-# core flags
-set(CORE_FLAGS "-mthumb -mcpu=cortex-m4 -mlittle-endian -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb-interwork --specs=nano.specs --specs=nosys.specs ${ADDITIONAL_CORE_FLAGS}")
-
 # compiler: language specific flags
-set(CMAKE_C_FLAGS "${CORE_FLAGS} -Os -ffunction-sections -fdata-sections -Wall -std=gnu99 -mfloat-abi=softfp -Wa,-adhlns="$@.lst" -pipe -c -fmessage-length=0 -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mthumb -g3 -gdwarf-2" CACHE INTERNAL "c compiler flags")
-set(CMAKE_C_FLAGS_DEBUG "" CACHE INTERNAL "c compiler flags: Debug")
-set(CMAKE_C_FLAGS_RELEASE "" CACHE INTERNAL "c compiler flags: Release")
+set(CMAKE_C_STANDARD 99)
 
-set(CMAKE_CXX_FLAGS "${CORE_FLAGS} -fno-rtti -fno-exceptions -fno-builtin -Wall -std=gnu++11 -fdata-sections -ffunction-sections -g -ggdb3" CACHE INTERNAL "cxx compiler flags")
-set(CMAKE_CXX_FLAGS_DEBUG "" CACHE INTERNAL "cxx compiler flags: Debug")
-set(CMAKE_CXX_FLAGS_RELEASE "" CACHE INTERNAL "cxx compiler flags: Release")
+set(CMAKE_C_FLAGS "-mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra")
+set(CMAKE_CXX_FLAGS "-mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra")
+set(CMAKE_C_FLAGS_RELEASE "-mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra")
+set(CMAKE_CXX_FLAGS_RELEASE "-mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra")
+set(CMAKE_C_FLAGS_DEBUG "-mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "-mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -Wextra")
+
 
 set(CMAKE_ASM_FLAGS "${CORE_FLAGS} -g -ggdb3 -D__USES_CXX" CACHE INTERNAL "asm compiler flags")
 set(CMAKE_ASM_FLAGS_DEBUG "" CACHE INTERNAL "asm compiler flags: Debug")
